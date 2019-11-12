@@ -1,4 +1,4 @@
-# ntnu-cyborg-website
+# Cyborg-GUI-Website
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
