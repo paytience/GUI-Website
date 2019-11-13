@@ -56,7 +56,7 @@ namespace CyborgWeb
         protected void Page_PreRender(object sender, EventArgs e)
         {
             MongoDB newDB = new MongoDB();
-            newDB.Create();
+            //newDB.Create();
             //string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
             //MongoClient client = new MongoClient(connectionString);
 
@@ -81,6 +81,46 @@ namespace CyborgWeb
 
             //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + collection + "');", true);
 
+        }
+
+        private void FillTxtBoxesAsync()
+        {
+            try
+            {
+                //string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MongoDB"].ConnectionString;
+                string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
+                MongoClient MongodbClient = new MongoClient(connectionString);
+                
+                // Get Database and Collection
+                IMongoDatabase Mongodb = MongodbClient.GetDatabase("cyborg_data");
+                var MongodbcollList = Mongodb.ListCollections().ToList();
+                //Console.WriteLine("The MongoDB list of collections are: ");
+                //foreach (var item in MongodbcollList)
+                //{
+                //    Console.WriteLine(item);
+                //}
+                IMongoCollection<BsonDocument> mydocument = Mongodb.GetCollection<BsonDocument>("mydocument");
+
+                BsonElement employeename = new BsonElement("employeename", "Tapas Pal");
+                BsonDocument empployee = new BsonDocument();
+                empployee.Add(employeename);
+                empployee.Add(new BsonElement("employeenumber", 123));
+                mydocument.InsertOne(empployee);
+
+                //create(Mongodb, mydocument);
+                //update(Mongodb, mydocument);
+                //delete(Mongodb, mydocument);
+
+                var myresultDoc = mydocument.Find(new BsonDocument()).ToList();
+                foreach (var myitem in myresultDoc)
+                {
+                    Console.WriteLine(myitem.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         [WebMethod]

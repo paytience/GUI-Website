@@ -58,7 +58,7 @@
         </nav>
 
         <!-- Header -->
-        <header class="masthead">
+        <header class="masthead" style="height:1050px">
             <div class="container">
                 <div class="intro-text">
                     <div class="intro-lead-in">Welcome To The Cyborg Website</div>
@@ -77,18 +77,18 @@
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-battery fa-2x"></i>
-                                <h2 class="timer count-title count-number" data-to="100" data-speed="1500">5</h2>
+                                <h2 runat="server" id="txtBattery" class="timer count-title count-number" data-to="100" data-speed="1500">5</h2>
                                 <p class="count-text ">Battery Charge</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-toggle-on fa-2x"></i>
-                                <h2 class="count-title">True</h2>
+                                <h2 runat="server" id="txtMotorstate" class="count-title">True</h2>
                                 <p class="count-text ">Motor On</p>
                             </div>
                         </div>
-                        <div class="col">
+<%--                        <div class="col">
                             <div class="counter">
                                 <i class="fa fa-lightbulb-o fa-2x"></i>
                                 <h2 class="count-title" data-to="56" data-speed="1500">15</h2>
@@ -101,7 +101,7 @@
                                 <h2 class="timer count-title count-number" data-to="157" data-speed="1500">20</h2>
                                 <p class="count-text ">Bugs</p>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
                 <%--<div class="col-lg-6">
@@ -246,7 +246,7 @@
         </section>--%>
 
         <!-- Contact -->
-        <section class="page-section" id="contact">
+        <section class="page-section" style="height:990px" id="contact">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
