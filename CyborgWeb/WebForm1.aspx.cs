@@ -4,71 +4,82 @@ using System.Web.Services;
 using System.Linq;
 using System.Web;
 using System.Net.Mail;
-
+using MongoDB.Bson;
+using MongoDB.Driver;
+using System.Threading.Tasks;
 
 namespace CyborgWeb
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
+        //protected void Page_Load(object sender, EventArgs e)
+        //{
             
-        }
+        //}
+        //static void Main(string[] args)
+        //{
+        //    MainAsync().Wait();
+
+        //    Console.ReadLine();
+        //}
+        //static async Task MainAsync()
+        //{
+        //    string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
+        //    MongoClient client = new MongoClient(connectionString);
+
+        //    var db = client.GetDatabase("cyborg_data");
+
+        //    var collection = db.GetCollection<BsonDocument>("__rosarnl_node__battery_status");
+
+        //    var MongodbcollList = db.ListCollections().ToList();
+
+        //    foreach (var item in MongodbcollList)
+        //    {
+        //        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "The MongoDB list of collections are: " + "');", true);
+        //        ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + item + "');", true);
+        //    }
+
+        //    using (IAsyncCursor<BsonDocument> cursor = await collection.FindAsync(new BsonDocument()))
+        //    {
+        //        while (await cursor.MoveNextAsync())
+        //        {
+        //            IEnumerable<BsonDocument> batch = cursor.Current;
+        //            foreach (BsonDocument document in batch)
+        //            {
+        //                Console.WriteLine(document);
+        //                Console.WriteLine();
+        //            }
+        //        }
+        //    }
+        //}
+
         protected void Page_PreRender(object sender, EventArgs e)
         {
-            List<List<List<string>>> listAlternatives = new List<List<List<string>>>();
-            List<List<string>> listAnswers = new List<List<string>>();
+            MongoDB newDB = new MongoDB();
+            newDB.Create();
+            //string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
+            //MongoClient client = new MongoClient(connectionString);
 
-            List<string> lstQuizId = new List<string>();
-            List<string> lstQuizNames = new List<string>();
+            //var db = client.GetDatabase("cyborg_data");
 
-            List<string> lstQuestionId = new List<string>();
-            List<string> lstQuestionText = new List<string>();
-            List<string> lstQuizQuestionId = new List<string>();
-            List<string> lstQuestionDifficulty = new List<string>();
-            List<string> lstQuestionHint = new List<string>();
+            //var collection = db.GetCollection<BsonDocument>("__rosarnl_node__battery_status");
 
-            List<string> lstAlternativeId = new List<string>();
-            List<string> lstQuestionAlternativeId = new List<string>();
-            List<string> lstCorrect = new List<string>();
-            List<string> lstAlternativeText = new List<string>();
-            List<string> lstQuizAlternativeId = new List<string>();
+            //var MongodbcollList = db.ListCollections().ToList();
 
-            Data quizData = new Data();
+            //foreach (var item in MongodbcollList)
+            //{
+            //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + "The MongoDB list of collections are: " + "');", true);
+            //    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + item + "');", true);
+            //}
 
-            quizData.GetQuizNames(out lstQuizId, out lstQuizNames);
-            quizData.GetQuestions(out lstQuestionId, out lstQuestionText, out lstQuizQuestionId, out lstQuestionDifficulty, out lstQuestionHint);
-            quizData.GetAlternatives(out lstAlternativeId, out lstQuestionAlternativeId, out lstCorrect, out lstAlternativeText, out lstQuizAlternativeId);
+            //string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
+            //MongoClient client = new MongoClient(connectionString);
+            //var db = client.GetDatabase("cyborg_data");
+            //var collection = db.GetCollection<BsonDocument>("__rosarnl_node__battery_status");
 
 
-            List<Quiz> Quizes = new List<Quiz>();
-            for (int i = 0; i < lstQuizId.Count(); i++) //10 times
-            {
-                List<Question> Questions = new List<Question>();
-                for (int j = 0; j < lstQuestionId.Count(); j++) //10*(3 or 4) times
-                {
-                    List<Alternative> Alternatives = new List<Alternative>();
-                    
-                    if (Convert.ToInt32(lstQuizId[i]) == Convert.ToInt32(lstQuizQuestionId[j])) //if quizid (quiz) = quizid (question)
-                    {
-                        for (int k = 0; k < lstAlternativeId.Count(); k++) //10*(3 or 4)*4 times
-                        {
-                            if (Convert.ToInt32(lstQuestionId[j]) == Convert.ToInt32(lstQuestionAlternativeId[k]) & Convert.ToInt32(lstQuizId[i]) == Convert.ToInt32(lstQuizAlternativeId[k])) //if questionid (question) = questionid (alternative)
-                            {
-                                Alternatives.Add(new Alternative(lstAlternativeId[k], lstQuestionAlternativeId[k], lstCorrect[k], lstAlternativeText[k], lstQuizAlternativeId[k]));
-                            }
-                        }
-                        Questions.Add(new Question(lstQuestionId[j], lstQuestionText[j], lstQuizQuestionId[j], lstQuestionDifficulty[j], Alternatives, lstQuestionHint[j]));
-                    }
-                }
-                Quizes.Add(new Quiz(lstQuizId[i], lstQuizNames[i], Questions));
-            }
 
-            Session["quizData"] = Quizes;
-
-            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + text + "');", true);
-
-
+            //ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + collection + "');", true);
 
         }
 
