@@ -86,7 +86,7 @@
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-toggle-on fa-2x"></i>
-                                <h2 runat="server" id="txtMotorsstate" class="count-title">Hei</h2>
+                                <h2 runat="server" id="txtMotorsstate" class="count-title">Active</h2>
                                 <p class="count-text ">Motor On</p>
                             </div>
                         </div>
