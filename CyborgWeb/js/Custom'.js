@@ -504,62 +504,22 @@
 //    $('#LeaderBoardModal').modal('hide');
 //    $('#ResultModal').modal('show');
 //}
-
-//function init() {
-//    $.ajax({
-//        type: "POST",
-//        url: "WebForm1.aspx/GetQuizes",
-//        data: "{}",
-//        contentType: "application/json; charset=utf-8",
-//        dataType: "json",
-//        success: function (msg) {
-//            quizes = msg.d;
-//            //console.log(msg.d);
-
-//            //fill Lecture dropdown menu
-//            for (var i = 0; i < msg.d.length; i++) {
-//                var dropDownItemId = "dropdown" + (i + 1).toString();
-//                var dropDownItemText = msg.d[i].QuizName;
-//                var dropDownItem = document.getElementById(dropDownItemId);
-//                dropDownItem.innerHTML = dropDownItemText;
-//                dropDownItem.style.display = 'block';
-//            }
-
-//            //Create and fill 3d arrays with "0", and 'correct answer array' with "1"s.
-//            for (var i = 0; i < quizes.length; i++) {
-//                arrChoices[i] = [];
-//                arrCorrectAnswers[i] = [];
-//                arrLifeLines1[i] = [];
-//                arrLifeLines2[i] = [];
-//                for (var j = 0; j < quizes[i].Questions.length; j++) {
-//                    arrChoices[i][j] = [];
-//                    arrCorrectAnswers[i][j] = [];
-//                    arrLifeLines1[i][j] = [];
-//                    arrLifeLines2[i][j] = "0";
-//                    for (var k = 0; k < quizes[i].Questions[j].Alternatives.length; k++) {
-//                        arrChoices[i][j][k] = "0";
-//                        if (quizes[i].Questions[j].Alternatives[k].Correct == "True") {
-//                            arrCorrectAnswers[i][j][k] = "1";
-//                        }
-//                        else
-//                        {
-//                            arrCorrectAnswers[i][j][k] = "0";
-//                        }
-//                        arrLifeLines1[i][j][k] = "0";
-//                    }
-//                }
-//            }
-
-//            //get page elements
-//            modalTitle = document.getElementById('modalTitle');
-//            questionText = document.getElementById('questionText');
-//            btnBack = document.getElementById('btnBack');
-//            btnNext = document.getElementById('btnNext');
-//            btnSubmit = document.getElementById('btnSubmit');
-//            txtName = document.getElementById('txtName');
-//            alts = [document.getElementById("alt1"), document.getElementById("alt2"), document.getElementById("alt3"), document.getElementById("alt4")];
-//            altRadios = [document.getElementById("radio-button-1"), document.getElementById("radio-button-2"), document.getElementById("radio-button-3"), document.getElementById("radio-button-4")];
-//            altRadioBoxes = [document.getElementById("alt1Box"), document.getElementById("alt2Box"), document.getElementById("alt3Box"), document.getElementById("alt4Box")];
-//        }
-//    });
-//}
+function GetBatteryStatus() {
+    $.ajax({
+        type: "POST",
+        url: "WebForm1.aspx/GetBatteryStatus",
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            BatteryStatus = msg;
+            console.log(msg);
+            console.log(msg.d);
+            document.getElementById("txtBattery").innerHTML = msg.d.toString();
+            document.getElementById("txtMotorsstate").innerHTML = "Active";
+        }
+    });
+}
+function init() {
+    setInterval(GetBatteryStatus, 5000);
+}

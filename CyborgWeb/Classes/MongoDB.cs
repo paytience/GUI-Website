@@ -4,47 +4,88 @@ using System.Linq;
 using System.Web;
 using MongoDB.Driver;
 using MongoDB.Bson;
-
+using System.Web.UI.HtmlControls;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using MongoDB.Bson;
 namespace CyborgWeb
 {
     public class MongoDB
     {
-        public void Create() {
-            try
-            {
-                string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
-                MongoClient MongodbClient = new MongoClient(connectionString);
-                // Get Database and Collection
-                IMongoDatabase Mongodb = MongodbClient.GetDatabase("cyborg_data");
-                var MongodbcollList = Mongodb.ListCollections().ToList();
-                //Console.WriteLine("The MongoDB list of collections are: ");
-                //foreach (var item in MongodbcollList)
-                //{
-                //    Console.WriteLine(item);
-                //}
-                IMongoCollection<BsonDocument> mydocument = Mongodb.GetCollection<BsonDocument>("mydocument");
-                
-                BsonElement employeename = new BsonElement("employeename", "Tapas Pal");
-                BsonDocument empployee = new BsonDocument();
-                empployee.Add(employeename);
-                empployee.Add(new BsonElement("employeenumber", 123));
-                mydocument.InsertOne(empployee);
+        private IMongoCollection<BsonDocument> batterystatus;
+        private IMongoCollection<BsonDocument> motorsstate;
+        private HtmlGenericControl batteryTextBox;
+        private HtmlGenericControl motorsstateTextBox;
+        public static string batterystatusString { get; set; }
 
-                //create(Mongodb, mydocument);
-                //update(Mongodb, mydocument);
-                //delete(Mongodb, mydocument);
+        public MongoDB(IMongoCollection<BsonDocument> battery_status, HtmlGenericControl battery_TextBox, IMongoCollection<BsonDocument> motors_state, HtmlGenericControl motorsstate_TextBox)
+        {
+            batterystatus = battery_status;
+            batteryTextBox = battery_TextBox;
+            motorsstate = motors_state;
+            motorsstateTextBox = motorsstate_TextBox;
+        }
 
-                var myresultDoc = mydocument.Find(new BsonDocument()).ToList();
-                foreach (var myitem in myresultDoc)
-                {
-                    Console.WriteLine(myitem.ToString());
-                }
-            }
-            catch (Exception ex)
+        public MongoDB()
+        {
+
+        }
+
+        public void WatchCollection()
+        {
+            var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<BsonDocument>>().Match(Builders<ChangeStreamDocument<BsonDocument>>.Filter.Gte("FullDocument.charge_percent", 0));
+            var options = new ChangeStreamOptions { FullDocument = ChangeStreamFullDocumentOption.UpdateLookup };
+            //var enumerator = batterystatus.Watch(options).ToEnumerable().GetEnumerator();
+
+            var cursor = batterystatus.Watch(pipeline, options);
+            foreach (var change in cursor.ToEnumerable())
             {
-                Console.WriteLine(ex.Message);
+                dynamic data = JObject.Parse(JsonConvert.SerializeObject(BsonTypeMapper.MapToDotNetValue(change.FullDocument)));
+                batterystatusString = data.charge_percent.ToString();
             }
         }
+
+        public string GetBatteryPercentage()
+        {
+            return batterystatusString;
+        }
+
+        //public void Create() {
+        //    try
+        //    {
+        //        string connectionString = "mongodb+srv://cyborg:hmPHK#4.iunGKD2@cyborg-gui-mg1nk.azure.mongodb.net/test?retryWrites=true&w=majority";
+        //        MongoClient MongodbClient = new MongoClient(connectionString);
+        //        // Get Database and Collection
+        //        IMongoDatabase Mongodb = MongodbClient.GetDatabase("cyborg_data");
+        //        var MongodbcollList = Mongodb.ListCollections().ToList();
+        //        Console.WriteLine("The MongoDB list of collections are: ");
+        //        foreach (var item in MongodbcollList)
+        //        {
+        //            Console.WriteLine(item);
+        //        }
+        //        IMongoCollection<BsonDocument> mydocument = Mongodb.GetCollection<BsonDocument>("mydocument");
+
+        //        BsonElement employeename = new BsonElement("employeename", "Tapas Pal");
+        //        BsonDocument empployee = new BsonDocument();
+        //        empployee.Add(employeename);
+        //        empployee.Add(new BsonElement("employeenumber", 123));
+        //        mydocument.InsertOne(empployee);
+
+        //        create(Mongodb, mydocument);
+        //        update(Mongodb, mydocument);
+        //        delete(Mongodb, mydocument);
+
+        //        var myresultDoc = mydocument.Find(new BsonDocument()).ToList();
+        //        foreach (var myitem in myresultDoc)
+        //        {
+        //            Console.WriteLine(myitem.ToString());
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //    }
+        //}
 
         //static void Main(string[] args)
         //{
@@ -90,29 +131,29 @@ namespace CyborgWeb
 
         //}
 
-        static void update(IMongoDatabase Mongodb, IMongoCollection<BsonDocument> mydocument)
-        {
-            // UPDATE
-            BsonElement updateemployee = new BsonElement("employeename", "Tapas1 Pal1");
+        //static void update(IMongoDatabase Mongodb, IMongoCollection<BsonDocument> mydocument)
+        //{
+        //    // UPDATE
+        //    BsonElement updateemployee = new BsonElement("employeename", "Tapas1 Pal1");
 
-            BsonDocument updateemployeedoc = new BsonDocument();
-            updateemployeedoc.Add(updateemployee);
-            updateemployeedoc.Add(new BsonElement("employeenumber",
-               1234));
+        //    BsonDocument updateemployeedoc = new BsonDocument();
+        //    updateemployeedoc.Add(updateemployee);
+        //    updateemployeedoc.Add(new BsonElement("employeenumber",
+        //       1234));
 
-            BsonDocument findemployeeDoc = new BsonDocument(new BsonElement("employeename", "Tapas Pal"));
+        //    BsonDocument findemployeeDoc = new BsonDocument(new BsonElement("employeename", "Tapas Pal"));
 
-            var updateDoc = mydocument.FindOneAndReplace(findemployeeDoc, updateemployeedoc);
+        //    var updateDoc = mydocument.FindOneAndReplace(findemployeeDoc, updateemployeedoc);
 
-            Console.WriteLine(updateDoc);
+        //    Console.WriteLine(updateDoc);
 
-        }
-        static void delete(IMongoDatabase Mongodb, IMongoCollection<BsonDocument> mydocument)
-        {
-            // DELETE
-            BsonDocument findAnotheremployee = new BsonDocument(new BsonElement("employeename", "Tapas1 Pal1"));
+        //}
+        //static void delete(IMongoDatabase Mongodb, IMongoCollection<BsonDocument> mydocument)
+        //{
+        //    // DELETE
+        //    BsonDocument findAnotheremployee = new BsonDocument(new BsonElement("employeename", "Tapas1 Pal1"));
 
-            mydocument.FindOneAndDelete(findAnotheremployee);
-        }
+        //    mydocument.FindOneAndDelete(findAnotheremployee);
+        //}
     }
 }

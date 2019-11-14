@@ -33,13 +33,13 @@ namespace CyborgWeb
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtBattery;
 
         /// <summary>
-        /// txtMotorstate control.
+        /// txtMotorsstate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtMotorstate;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtMotorsstate;
 
         /// <summary>
         /// sendMessageButton control.

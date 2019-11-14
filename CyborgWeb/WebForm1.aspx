@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Practical Project Management</title>
+    <title>Cyborg Web App</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -63,7 +63,8 @@
                 <div class="intro-text">
                     <div class="intro-lead-in">Welcome To The Cyborg Website</div>
                     <div class="intro-heading text-uppercase">The Cyborg v4.0</div>
-<%--                    <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Take test</a>--%>
+                    <%--<a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services"></a>--%>
+                    <%--<asp:Button runat="server" ID="btnGetData" OnClientClick="" CssClass="btn btn-primary btn-xl text-uppercase" Text="Take test" OnClick="BtnGetData_Click"/>--%>
                 </div>
                 <div class="container">
                     <br />
@@ -77,14 +78,15 @@
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-battery fa-2x"></i>
-                                <h2 runat="server" id="txtBattery" class="timer count-title count-number" data-to="100" data-speed="1500">5</h2>
+                                <h2 runat="server" id="txtBattery" class="count-title">5</h2>
+                                <%--<h2 runat="server" id="txtBattery" class="timer count-title count-number" data-to="100" data-speed="1500">5</h2>--%>
                                 <p class="count-text ">Battery Charge</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-toggle-on fa-2x"></i>
-                                <h2 runat="server" id="txtMotorstate" class="count-title">True</h2>
+                                <h2 runat="server" id="txtMotorsstate" class="count-title">Hei</h2>
                                 <p class="count-text ">Motor On</p>
                             </div>
                         </div>
