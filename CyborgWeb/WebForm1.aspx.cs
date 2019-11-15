@@ -33,6 +33,8 @@ namespace CyborgWeb
             Thread T1 = new Thread(new ThreadStart(newDB.WatchCollection));
             T1.Start();
 
+            Thread T2 = new Thread(new ThreadStart(newDB.WatchCollection2));
+            T2.Start();
             //Thread T2 = new Thread(WatchCollection(rosarnl_motorsstate));
             //Thread T1 = new Thread(watchCollection1);
 
@@ -46,6 +48,14 @@ namespace CyborgWeb
             MongoDB db = new MongoDB();
             string batteryStatus = db.GetBatteryPercentage();
             return batteryStatus;
+        }
+
+        [WebMethod]
+        public static string GetMotorsState() //Webmethod ran from js method in Custom'.js, returns Quizes gathered from database in page_prerender event
+        {
+            MongoDB db = new MongoDB();
+            string motorsState = db.GetMotorsState();
+            return motorsState;
         }
 
         //        //FilterDefinition<BsonDocument> filter = "{ 'charge_percent': 80}";

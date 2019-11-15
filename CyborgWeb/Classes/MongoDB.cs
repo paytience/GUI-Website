@@ -17,6 +17,7 @@ namespace CyborgWeb
         private HtmlGenericControl batteryTextBox;
         private HtmlGenericControl motorsstateTextBox;
         public static string batterystatusString { get; set; }
+        public static string motorsStateString { get; set; }
 
         public MongoDB(IMongoCollection<BsonDocument> BatteryStatus, HtmlGenericControl BatteryTextBox, IMongoCollection<BsonDocument> MotorsState, HtmlGenericControl MotorsstateTextBox)
         {
@@ -44,9 +45,27 @@ namespace CyborgWeb
             }
         }
 
+        public void WatchCollection2()
+        {
+            var pipeline = new EmptyPipelineDefinition<ChangeStreamDocument<BsonDocument>>().Match(Builders<ChangeStreamDocument<BsonDocument>>.Filter.Empty);
+            var options = new ChangeStreamOptions { FullDocument = ChangeStreamFullDocumentOption.UpdateLookup };
+
+            var cursor = motorsstate.Watch(pipeline, options);
+            foreach (var change in cursor.ToEnumerable())
+            {
+                dynamic data = JObject.Parse(JsonConvert.SerializeObject(BsonTypeMapper.MapToDotNetValue(change.FullDocument)));
+                motorsStateString = data.data.ToString();
+            }
+        }
+
         public string GetBatteryPercentage()
         {
             return batterystatusString;
+        }
+
+        public string GetMotorsState()
+        {
+            return motorsStateString;
         }
 
         //public void Create() {

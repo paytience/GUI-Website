@@ -512,14 +512,31 @@ function GetBatteryStatus() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            BatteryStatus = msg;
             console.log(msg);
             console.log(msg.d);
+            console.log("fikk battery status");
             document.getElementById("txtBattery").innerHTML = msg.d.toString();
-            document.getElementById("txtMotorsstate").innerHTML = "Active";
         }
     });
 }
+
+function GetMotorsState() {
+    $.ajax({
+        type: "POST",
+        url: "WebForm1.aspx/GetMotorsState",
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            console.log(msg);
+            console.log(msg.d);
+            console.log("fikk motors state");
+            document.getElementById("txtMotorsstate").innerHTML = msg.d.toString();
+        }
+    });
+}
+
 function init() {
     setInterval(GetBatteryStatus, 5000);
+    setInterval(GetMotorsState, 5000);
 }
