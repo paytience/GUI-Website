@@ -78,7 +78,7 @@
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-battery fa-2x"></i>
-                                <h2 runat="server" id="txtBattery" class="count-title">5</h2>
+                                <h2 runat="server" id="txtBattery" class="count-title">-</h2>
                                 <%--<h2 runat="server" id="txtBattery" class="timer count-title count-number" data-to="100" data-speed="1500">5</h2>--%>
                                 <p class="count-text ">Battery Charge</p>
                             </div>
@@ -86,7 +86,7 @@
                         <div class="col">
                             <div class="counter">
                                 <i class="fa fa-toggle-on fa-2x"></i>
-                                <h2 runat="server" id="txtMotorsstate" class="count-title">Active</h2>
+                                <h2 runat="server" id="txtMotorsstate" class="count-title">-</h2>
                                 <p class="count-text ">Motors State</p>
                             </div>
                         </div>

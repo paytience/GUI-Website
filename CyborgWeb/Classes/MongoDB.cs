@@ -18,6 +18,8 @@ namespace CyborgWeb
         private HtmlGenericControl motorsstateTextBox;
         public static string batterystatusString { get; set; }
         public static string motorsStateString { get; set; }
+        public static DateTime batterystatusDateTime { get; set; }
+        public static DateTime motorsStateDateTime { get; set; }
 
         public MongoDB(IMongoCollection<BsonDocument> BatteryStatus, HtmlGenericControl BatteryTextBox, IMongoCollection<BsonDocument> MotorsState, HtmlGenericControl MotorsstateTextBox)
         {
@@ -41,6 +43,7 @@ namespace CyborgWeb
             foreach (var change in cursor.ToEnumerable())
             {
                 dynamic data = JObject.Parse(JsonConvert.SerializeObject(BsonTypeMapper.MapToDotNetValue(change.FullDocument)));
+                batterystatusDateTime = Convert.ToDateTime(data.Date);
                 batterystatusString = data.charge_percent.ToString();
             }
         }
@@ -54,18 +57,36 @@ namespace CyborgWeb
             foreach (var change in cursor.ToEnumerable())
             {
                 dynamic data = JObject.Parse(JsonConvert.SerializeObject(BsonTypeMapper.MapToDotNetValue(change.FullDocument)));
+                motorsStateDateTime = Convert.ToDateTime(data.Date);
                 motorsStateString = data.data.ToString();
             }
         }
 
         public string GetBatteryPercentage()
         {
-            return batterystatusString;
+            DateTime now = DateTime.UtcNow.AddMinutes(55);
+            if (batterystatusDateTime < now)
+            {
+                return "-";
+            }
+            else
+            {
+                return batterystatusString;
+            }
+                
         }
 
         public string GetMotorsState()
         {
-            return motorsStateString;
+            DateTime now = DateTime.UtcNow.AddMinutes(55);
+            if (motorsStateDateTime < now)
+            {
+                return "No response";
+            }
+            else
+            {
+                return motorsStateString;
+            }
         }
 
         //public void Create() {
