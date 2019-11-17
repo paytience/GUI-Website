@@ -81,7 +81,7 @@ namespace CyborgWeb
             DateTime now = DateTime.UtcNow.AddMinutes(55);
             if (motorsStateDateTime < now)
             {
-                return "No response";
+                return "-";
             }
             else
             {
