@@ -641,7 +641,7 @@ function SetBehaviour(val) {
 
     var cmdBehaviour = new ROSLIB.Topic({
         ros: ros,
-        name: '/cyborg_modeselector/behaviour_state',
+        name: '/cyborg_commander/behaviour_state',
         messageType: 'std_msgs/Bool'
     });
 
