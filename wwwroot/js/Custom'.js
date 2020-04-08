@@ -669,6 +669,7 @@ function init() {
         console.log('Connection to websocket server closed.');
     });
     // setInterval(rosTopics, 1000);
+    // something
     setInterval(GetBatteryStatus, 1000);
     setInterval(GetMotorsState, 1000);
 }
