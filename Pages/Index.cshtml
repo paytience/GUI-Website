@@ -25,13 +25,13 @@
             </div>
         </nav>
         <!-- Header -->
-        <header class="masthead" style="height:1050px">
+        <header class="masthead" style="height:1500px">
             <div class="container">
                 <div class="intro-text">
                     <div class="intro-lead-in">Welcome To The Cyborg Website</div>
                     <div class="intro-heading text-uppercase">The Cyborg v4.0</div>
                 </div>
-
+                        <div id="map"></div>
                 <input type="button" id="btnStartBehaviour" onclick="SetBehaviour(true)" value="Start robot" />
                 <input type="button" id="btnStopBehaviour" onclick="SetBehaviour(false)" value="Stop robot" />
                 <div class="container">
@@ -56,8 +56,6 @@
                 </div>
             </div>
         </header>
-
-        
 
         <!-- Contact -->
         <section class="page-section" style="height:990px" id="contact">
@@ -142,6 +140,14 @@
         </footer>
     </form>
     @section Scripts {
+    <script type="text/javascript" src="https://static.robotwebtools.org/EaselJS/current/easeljs.min.js"></script>
+    <script type="text/javascript" src="https://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+    <script type="text/javascript" src="https://static.robotwebtools.org/ros2djs/current/ros2d.min.js"></script>
+    <script type="text/javascript" src="https://static.robotwebtools.org/nav2djs/current/nav2d.min.js"></script>
+    @* <script type="text/javascript" src="https://cdn.robotwebtools.org/nav2djs/current/nav2d.min.js"></script> *@
+
+
     <!-- Font-awesome Icons -->
     <script src="https://kit.fontawesome.com/ffd2f95330.js" crossorigin="anonymous"></script>
 
@@ -151,10 +157,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
     <!-- Casper JavaScript -->
-    <script type='text/javascript' > 
-        /*Connect to websocket server of ros master.*/
-
-    </script>
     <script src="~/js/displayer.js" type="text/javascript"></script>
     <script src="~/js/publisher.js" type="text/javascript"></script>
     <script src="~/js/map.js" type="text/javascript"></script>
@@ -172,10 +174,7 @@
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/chat.js"></script>
     <script type="text/javascript" src="~/js/async.js"></script>
-    <script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.js"></script>
-    <script type="text/javascript" src="https://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
     }
-    
 </body>
 
 

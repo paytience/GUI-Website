@@ -5,17 +5,26 @@ function initMap() {
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
         divID : 'map',
-        width : 600,
-        height : 500
+        width : 700,
+        height : 700
         });
         
-    // Setup the map client.
-    var gridClient = new ROS2D.OccupancyGridClient({
-    ros : ros,
-    rootObject : viewer.scene
+    var gridClient = new NAV2D.OccupancyGridClientNav({
+        ros : ros,
+        rootObject : viewer.scene,
+        viewer : viewer,
+        serverName : '/move_base'
     });
-// Scale the canvas to fit to the map
-gridClient.on('change', function(){
-viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
-});
+    
+    // // Setup the map client.
+    // var gridClient = new ROS2D.OccupancyGridClient({
+    // ros : ros,
+    // topic : "/map",
+    // rootObject : viewer.scene
+    // });
+
+    // // Scale the canvas to fit to the map
+    // gridClient.on('change', function(){
+    // viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+    // });
 }
