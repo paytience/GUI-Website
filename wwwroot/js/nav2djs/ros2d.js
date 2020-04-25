@@ -1103,7 +1103,7 @@ var ROS2D = ROS2D || {
    * @param height - the height to scale to in meters
    */
   ROS2D.Viewer.prototype.scaleToDimensions = function(width, height) {
-    // restore to values before shifting, if ocurred
+    // restore to values before shifting, if occurred
     this.scene.x = typeof this.scene.x_prev_shift !== 'undefined' ? this.scene.x_prev_shift : this.scene.x;
     this.scene.y = typeof this.scene.y_prev_shift !== 'undefined' ? this.scene.y_prev_shift : this.scene.y;
     

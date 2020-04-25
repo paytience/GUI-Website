@@ -228,12 +228,27 @@ NAV2D.Navigator = function(options) {
     var yDelta = 0;
 
     var mouseEventHandler = function(event, mouseState) {
-
       if (mouseState === 'down'){
-        // get position when mouse button is pressed down
-        position = stage.globalToRos(event.stageX, event.stageY);
-        positionVec3 = new ROSLIB.Vector3(position);
-        mouseDown = true;
+        var x;
+        var y;
+        x = event.stageX;
+        y = event.stageY;
+
+        x = Math.round(x * widthRatio);
+        y = Math.round((canvasHeight-y) * heightRatio);
+
+        var num = (y*mapWidth) + x - 1;
+        if (staticMap[num] == 0 ){
+          mapClick = true;
+        }else{
+          mapClick = false;
+        };
+        if (mapClick){
+          // get position when mouse button is pressed down
+          position = stage.globalToRos(event.stageX, event.stageY);
+          positionVec3 = new ROSLIB.Vector3(position);
+          mouseDown = true;
+        };
       }
       else if (mouseState === 'move'){
         // remove obsolete orientation marker
@@ -284,7 +299,6 @@ NAV2D.Navigator = function(options) {
         mouseDown = false;
 
         var goalPos = stage.globalToRos(event.stageX, event.stageY);
-
         var goalPosVec3 = new ROSLIB.Vector3(goalPos);
         
         xDelta =  goalPosVec3.x - positionVec3.x;
@@ -313,15 +327,15 @@ NAV2D.Navigator = function(options) {
     };
 
     this.rootObject.addEventListener('stagemousedown', function(event) {
-      mouseEventHandler(event,'down');
+      mouseEventHandler(event,'down', mapClick);
     });
 
     this.rootObject.addEventListener('stagemousemove', function(event) {
-      mouseEventHandler(event,'move');
+      mouseEventHandler(event,'move', mapClick);
     });
 
     this.rootObject.addEventListener('stagemouseup', function(event) {
-      mouseEventHandler(event,'up');
+      mouseEventHandler(event,'up', mapClick);
     });
   }
 };
