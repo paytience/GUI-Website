@@ -1,4 +1,4 @@
-# Cyborg-GUI-Website
+# Cyborg-GUI-Website - Autumn 2019
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
